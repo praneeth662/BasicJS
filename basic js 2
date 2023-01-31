@@ -1,0 +1,28 @@
+//console.log(document);
+//console.log(document);
+//var headerTitle = document.getElementById("main-header");
+//headerTitle.style.borderBottom = "solid 3px #000";
+//var header = document.getElementById("heading2");
+//header.style.fontWeight = "bold";
+//header.style.color = "green";
+
+//GET ELEMENTS BY CLASSNAME and making all listitems bold and 3rd element background to green.
+//var items = document.getElementsByClassName('list-group-item');
+//console.log(items);
+//console.log(items[1]);
+//items[1].textContent='Hello 2';
+//items[2].style.background='green';
+//for(var i=0; i < items.length;i++)
+//{
+    //items[i].style.fontWeight='bold';
+//}
+// GET ELEMENTS BY TAG NAME//
+var li = document.getElementsByTagName('li');
+console.log(li);
+console.log(li[1]);
+li[1].textContent='Hello 2';
+li[2].style.background='green';
+for(var i=0; i < li.length;i++)
+{
+    li[i].style.fontWeight='bold';
+}
