@@ -1,0 +1,50 @@
+// PARENT NODE//
+ var itemlist = document.querySelector('#items');
+ console.log(itemlist.parentNode);
+ itemlist.parentNode.style.backgroundColor = '#f4f4f4';
+ console.log(itemlist.parentNode.parentNode)
+
+ // parent element//
+ //console.log(itemlist.parentElement);
+ //itemlist.parentElement.style.backgroundColor='#f4f4f4';
+ //console.log(itemlist.parentElement.parentElement.parentElement);
+
+ //child nodes//
+ //console.log(itemlist.childNodes);
+ //console.log(itemlist.children);
+ //console.log(itemlist.children[1]);
+ //itemlist.children[1].style.backgroundColor = 'yellow';
+ // first child//
+ //console.log(itemlist.firstchild); //you will see text node
+ //console.log(itemlist.firstElementChild);
+ //itemlist.firstElementChild.textContent = 'Hello 1';
+ // last child//
+ //console.log(itemlist.lastchild); // you will see text node you hav to access frist child element by using nextstep
+ //console.log(itemlist.lastElementChild);
+
+ //next sibling//
+ //console.log(itemlist.nextSibling); //text node
+ //console.log(itemlist.nextElementSibling);
+ //previous sibling//
+ //console.log(itemlist.previousSibling);
+ //console.log(itemlist.previousElementSibling);
+ //itemlist.previousElementSibling.style.backgroundColor='green';
+
+ //create element
+
+ //frst we have to create a div
+ var newDiv = document.createElement('div');
+ //add class
+ newDiv.className='hello';
+ //add id
+ newDiv.id='hello 1';
+ // add title/attr
+ newDiv.setAttribute('title','Hello Div');
+ //create text node
+ var newDivText = document.createTextNode('Hello world');
+ //add text to div
+ newDiv.appendChild(newDivText);
+ //position to add in the page
+ var container = document.querySelector('header .container');
+ var h1 = document.querySelector('header h1');
+ container.insertBefore(newDiv,h1);
