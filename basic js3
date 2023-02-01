@@ -1,0 +1,15 @@
+// QUERY SELECTOR//
+//var item = document.querySelector('.list-group-item:nth-child(2)');
+//item.style.background='green';
+//var items = document.querySelector('.list-group-item:nth-child(3)');
+//items.style.display='none';
+
+// QUERY SELECTORALL//
+var items = document.querySelectorAll('.list-group-item')
+items[1].style.color='green';
+var item = document.querySelectorAll('li:nth-child(odd)');
+
+for(var i=0;i < item.length; i++)
+{
+    item[i].style.backgroundColor = 'green';
+}
