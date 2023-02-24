@@ -1,0 +1,112 @@
+<html>
+    <body>
+        <form onsubmit="SavetobackendStorage(event)">
+            <label> Choose Price </label>
+            <input type="number" name="DishPrice" id="dishprice" required>
+            <label> Choose Dish</label>
+            <input type="text" name="DishName" id="dishname" required>
+            <label for="TableName"> Choose a table</label>
+            <select name="TableName" id="tablenumber">
+                <option hidden></option>
+                <option value="table1" id="table1">Table 1</option>
+                <option value="table2" id="table2">Table 2</option>
+                <option value="table3" id="table3">Table 3</option>
+            </select>
+            <button>Add to bill</button>
+            </form>
+            <h1> Orders </h1> 
+            <h3>Table 1:</h3>   <ul id="listofitems1"> </ul>
+            <h3>Table 2:</h3>   <ul id="listofitems2"> </ul>
+            <h3>Table 3:</h3>   <ul id="listofitems3"> </ul>
+            
+        
+        <ul id='listOfitems'></ul>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.3.3/axios.min.js"></script>
+        <script>
+            function SavetobackendStorage(event)
+                {
+                    event.preventDefault();
+                    const price = event.target.dishprice.value;
+                    const name = event.target.dishname.value;
+                    const table= event.target.tablenumber.value;
+                    
+
+                    const obj={
+                            price,
+                            name,
+                            table
+                        }
+            
+                axios.post("https://crudcrud.com/api/13c66d2e04804fe2a94fd12197dc7f5b/orders",obj)
+                    .then((response) => {
+                         showUserOnScreen(response.data)
+
+                    })
+                    .catch((err) => {
+                        document.body.innerHTML = document.body.innerHTML + "<h4> Something Went Wrong </h4>"
+                        console.log(err)
+                    })
+                }    
+
+            window.addEventListener("DOMContentLoaded", () => {
+                axios.get("https://crudcrud.com/api/13c66d2e04804fe2a94fd12197dc7f5b/orders")
+                     .then((response) => {
+                        console.log(response)
+                            
+                        for(var i=0; i < response.data.length;i++)
+                        {
+                            showUserOnScreen(response.data[i])
+                        }
+
+                     })
+                     .catch((err) => {
+                        console.log(err)
+                     })
+                })
+            function showUserOnScreen(user)
+                {
+                    const childHTML =   `<li id=${user._id}> ${user.price} - ${user.name} -${user.table}
+                    <button onclick = deleteItem('${user._id}')>Delete Order </button></li>`
+                    if(user.table == document.getElementById('table1').id)
+                    {
+                        var parentNode = document.getElementById('listofitems1')
+                    }
+                    else if(user.table == document.getElementById('table2').id)
+                    {
+                        var parentNode = document.getElementById('listofitems2')
+                    }
+                    else if(user.table == document.getElementById('table3').id)
+                    {
+                        var parentNode = document.getElementById('listofitems3')
+                    }
+                    parentNode.innerHTML = parentNode.innerHTML + childHTML;
+
+                   
+                    
+                }
+            
+                function deleteItem(userId)
+                {
+                    axios.delete(`https://crudcrud.com/api/13c66d2e04804fe2a94fd12197dc7f5b/orders/${userId}`)
+                        .then((response) => {
+                            removeItemFromScreen(userId)
+                        })
+                        .catch((err) => {
+                            console.log(err)
+                        })
+                }
+                function removeItemFromScreen(userId)
+                   {
+                    const parentNode = document.getElementById('listOfitems');
+                    const childNodeToBeDeleted = document.getElementById(userId);
+                    if(childNodeToBeDeleted)
+                    {
+                        //parentNode.removeChild(childNodeToBeDeleted)
+                        childNodeToBeDeleted.remove()
+
+                    }
+                   }
+                
+        </script>
+    </body>
+</html>        
