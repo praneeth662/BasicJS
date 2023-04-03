@@ -1,0 +1,77 @@
+//app.js(simplechat.js)
+
+const express = require('express')
+const app = express()
+const bodyparser = require('body-parser')
+const userLogin = require('./routes/login')
+const UserMessage = require('./routes/message')
+const fs = require('fs')
+
+app.use(bodyparser.urlencoded({extended:true}))
+
+app.use(userLogin)
+app.use(UserMessage)
+
+app.use((req,res,next) => {
+    res.status(404).send("<h1>Page Not Found</h1>")
+})
+
+app.listen(3000)
+
+//login.js
+
+const express = require('express')
+const router = express.Router()
+
+router.get('/login',(req,res) => {
+    res.send(` <form action="/login" method="POST" onsubmit="localStorage.setItem('username',document.getElementById('username').value)">
+     <input id="username" type="text name="username">
+     <button type="submit">login</button>
+     </form>`)
+})
+
+
+
+router.post('/login',(req,res) => {
+    //console.log(req.body)
+    res.redirect('/')
+})
+
+module.exports = router
+
+//message.js
+
+const express = require('express')
+const data=[]
+const fs = require('fs')
+
+const router = express.Router()
+
+router.get('/',(req,res) => {
+    fs.readFile(`message.txt`,(err,data) => {
+        if(err){
+            console.log(err)
+            data = `No chat exists`
+        }
+        res.send(`${data}<form action="/" onsubmit="document.getElementById('username').value=localStorage.getItem('username')"
+        method="POST">
+
+                        <input type="text" id="message" name="message" placeHolder="message">
+                        <input type="hidden" id="username" name="username">
+                        <button type = "submit">send</button>
+                  </form>`        
+        )
+    })
+})
+
+router.post('/',(req,res,next) => {
+    data.push(`{${req.body.username}:${req.body.message}}`);
+    //console.log(data);
+    fs.writeFileSync('message.txt',`${req.body.username}:${req.body.message}`,{flag:'a'},err => {
+        console.log(err)
+    })
+
+    res.redirect('/')
+})
+
+module.exports = router
